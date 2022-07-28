@@ -16,9 +16,9 @@ export const ProjectListScreen = () => {
     上面的useState接受的参数类型就是
       interface T {
         name: string;
-       personId: string;
+        personId: string;
       }
-   */
+  */
   const [list, setList] = useState([]);
   const debouncedParam = useDebounce(param, 2000);
   // 当params变化要去请求接口
