@@ -2,9 +2,6 @@ import { useState, useEffect } from 'react';
 // 对于一个custom hook来说，必须是它里面用到了别的hook, 如果函数也能完成，那么函数就挺好的了
 // 转换成boolean
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
-// isFalsy(1)
-// isFalsy('aaa')
-
 // let a:unknown;
 // a = []
 // a = undefined,
@@ -42,4 +39,19 @@ export const useDebounce = <V>(value: V, delay?: number) => {
     return () => clearTimeout(timeout);
   }, [value, delay]);
   return debouncedValue;
+};
+
+export const useArray = <T>(initialValue: T[]) => {
+  const [value, setValue] = useState(initialValue);
+  return {
+    value,
+    setValue,
+    clear: () => setValue([]),
+    add: (item: T) => setValue([...value, item]),
+    removeIndex: (index: number) => {
+      const copy = [...value];
+      copy.slice(index, 1);
+      setValue(copy);
+    },
+  };
 };
