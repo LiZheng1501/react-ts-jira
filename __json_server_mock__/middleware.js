@@ -1,7 +1,7 @@
 module.exports = (req, res, next) => {
   if (req.method === 'POST' && req.path === '/login') {
     // 捕获login请求
-    if (req.body.username === 'lizheng' && req.body.password === '123456') {
+    if (req.body.username === 'lizheng' && req.body.password === '123') {
       return res.status(200).json({
         // 使用jwt格式
         user: {

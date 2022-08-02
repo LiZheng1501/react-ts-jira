@@ -6,6 +6,7 @@ export interface User {
   email: string;
   title: string;
   organization: string;
+  token: string;
 }
 
 // 表示这个组件如何使用
