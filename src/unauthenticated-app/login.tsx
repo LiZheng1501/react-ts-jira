@@ -1,10 +1,8 @@
 import React, { FormEvent } from 'react';
 import { useAuth } from '../context/auth-context';
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
 export const LoginScreen = () => {
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   // js/ts是鸭子类型：面向接口编程而不是面向对象编程
   // HtmlFormElement extends Element
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

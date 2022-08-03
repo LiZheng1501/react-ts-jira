@@ -5,12 +5,17 @@ module.exports = (req, res, next) => {
       return res.status(200).json({
         // 使用jwt格式
         user: {
-          token: 123,
+          token: 'Q5*4F#Dj',
         },
       });
     } else {
       return res.status(400).json({ message: '用户名或密码错误' });
     }
   }
+  debugger;
+  if (req.method === 'GET' && req.path === '/login') {
+    debugger;
+  }
+  debugger;
   next();
 };

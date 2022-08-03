@@ -3,6 +3,7 @@ import { SearchPanel } from './search-panel';
 import { List } from './list';
 import * as qs from 'qs';
 import { cleanObject, useDebounce, useMount } from '../../utils';
+import { useHttp } from '../../utils/http';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -12,6 +13,7 @@ export const ProjectListScreen = () => {
     name: '',
     personId: '',
   });
+  const client = useHttp();
   /**
     上面的useState接受的参数类型就是
       interface T {
@@ -23,22 +25,12 @@ export const ProjectListScreen = () => {
   const debouncedParam = useDebounce(param, 2000);
   // 当params变化要去请求接口
   useEffect(() => {
-    fetch(
-      `${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`
-    ).then(async (response) => {
-      if (response.ok) {
-        setList(await response.json());
-      }
-    });
+    client('projects', { data: cleanObject(debouncedParam) }).then(setList);
   }, [debouncedParam]);
 
   // useDidMount只执行一次
   useMount(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
+    client('users').then(setUsers);
   });
 
   return (

@@ -1,6 +1,8 @@
 import React, { ReactNode, useState } from 'react';
 import { User } from '../screens/project-list/search-panel';
 import * as auth from 'auth-provider';
+import { useMount } from '../utils';
+import { http } from '../utils/http';
 
 interface AuthForm {
   username: string;
@@ -23,6 +25,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (form: AuthForm) => auth.login(form).then(setUser); // user => setUser(user); 消参
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
+  // 在整个组件加载的时候
+  useMount(() => {
+    bootstrapUser().then(setUser);
+  });
   return (
     <AuthContext.Provider
       children={children}
@@ -38,4 +44,15 @@ export const useAuth = () => {
     throw new Error('useAuth必须在auth provider中使用');
   }
   return context;
+};
+
+// 初始化user
+const bootstrapUser = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    const data = await http('me', { token: token });
+    user = data.user;
+  }
+  return user;
 };
