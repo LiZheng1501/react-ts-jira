@@ -14,7 +14,7 @@ export const handleUserResponse = ({ user }: { user: User }) => {
 
 // 登录
 export const login = (data: { username: string; password: string }) => {
-  fetch(`${apiUrl}/login`, {
+  return fetch(`${apiUrl}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -23,13 +23,15 @@ export const login = (data: { username: string; password: string }) => {
   }).then(async (response) => {
     if (response.ok) {
       return handleUserResponse(await response.json());
+    } else {
+      return Promise.reject(data);
     }
   });
 };
 
 // 注册
 export const register = (data: { username: string; password: string }) => {
-  fetch(`${apiUrl}/register`, {
+  return fetch(`${apiUrl}/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -38,9 +40,12 @@ export const register = (data: { username: string; password: string }) => {
   }).then(async (response) => {
     if (response.ok) {
       return handleUserResponse(await response.json());
+    } else {
+      return Promise.reject(data);
     }
   });
 };
 
 // log out
-export const logout = window.localStorage.removeItem(localStorageKey);
+export const logout = async () =>
+  window.localStorage.removeItem(localStorageKey);
