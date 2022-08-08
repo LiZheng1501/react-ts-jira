@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { loadDevTools } from 'jira-dev-tool';
+// 务必在jira-dev-tool后面引入
+import 'antd/dist/antd.less'; // 使用craco来覆盖antd的默认的配置：比如说Primary的颜色
 import { AppProviders } from './context';
 
 const root = ReactDOM.createRoot(
