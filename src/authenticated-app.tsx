@@ -3,6 +3,7 @@ import React from 'react';
 import { ProjectListScreen } from './screens/project-list';
 import { useAuth } from './context/auth-context';
 import styled from '@emotion/styled';
+import { Row } from './components/lib';
 
 /*
 grid和flex各自的应用场景：
@@ -14,11 +15,11 @@ grid和flex各自的应用场景：
 */
 
 export const AuthenticatedApp = () => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   return (
     <Container>
-      <Header>
-        <HeaderLeft>
+      <Header between={true}>
+        <HeaderLeft gap={true}>
           <h3>logo</h3>
           <h3>项目</h3>
           <h3>用户</h3>
@@ -34,27 +35,8 @@ export const AuthenticatedApp = () => {
   );
 };
 
-const Container = styled.div`
-  display: grid;
-  grid-template-rows: 6rem 1fr 6rem;
-  grid-template-columns: 20rem 1fr 20rem;
-  grid-template-areas: 'header header header' 'nav main aside' 'footer footer footer';
-  height: 100vh;
-`;
-
-const Header = styled.header`
-  grid-area: header;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-const HeaderLeft = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+const Container = styled.div``;
+const Header = styled(Row)``;
+const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``;
-const Main = styled.main`
-  grid-area: main;
-`;
+const Main = styled.main``;
