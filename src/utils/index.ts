@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react';
 // 对于一个custom hook来说，必须是它里面用到了别的hook, 如果函数也能完成，那么函数就挺好的了
 // 转换成boolean
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
+export const isVoid = (value: unknown) =>
+  value === undefined || value === '' || value === null;
 // let a:unknown;
 // a = []
 // a = undefined,
 // 但是不能给unknown赋值给任何
 // 在一个函数里改变传入对象本身是不好的
-export const cleanObject = (object: object) => {
+export const cleanObject = (object: { [key: string]: unknown }) => {
   const res = { ...object };
   Object.keys(res).forEach((key) => {
-    // @ts-ignore
     const value = res[key];
-    if (isFalsy(value)) {
-      // @ts-ignore
+    if (isVoid(value)) {
       delete res[key];
     }
   });
