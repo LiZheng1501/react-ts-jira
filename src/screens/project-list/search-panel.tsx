@@ -22,9 +22,10 @@ interface SearchPanelProps {
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
   return (
     <Card>
-      <Form>
+      <Form layout={'inline'}>
         <Form.Item>
           <Input
+            placeholder={'项目名'}
             type={'text'}
             value={param.name}
             onChange={(event) =>

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { SearchPanel } from './search-panel';
 import { List } from './list';
-import * as qs from 'qs';
 import { cleanObject, useDebounce, useMount } from '../../utils';
 import { useHttp } from '../../utils/http';
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import styled from '@emotion/styled';
+// const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
@@ -34,9 +33,14 @@ export const ProjectListScreen = () => {
   });
 
   return (
-    <div>
+    <Container>
+      <h2>项目列表</h2>
       <SearchPanel users={users} param={param} setParam={setParam} />
       <List users={users} list={list} />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 2rem;
+`;

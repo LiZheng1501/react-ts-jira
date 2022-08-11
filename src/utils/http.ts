@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import qs from 'qs';
 import * as auth from 'auth-provider';
 import { useAuth } from '../context/auth-context';
@@ -55,11 +54,3 @@ export const useHttp = () => {
   return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user?.token });
 };
-
-type Person = {
-  name: string;
-  age: number;
-};
-
-type PickPersonKeys = keyof Person;
-type PersonOnlyName = Pick<Person, 'name'>;
