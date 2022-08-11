@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from './search-panel';
-import { Table } from 'antd';
+import { Table, TableProps } from 'antd';
 import dayjs from 'dayjs';
 
 interface Project {
@@ -11,13 +11,14 @@ interface Project {
   organization: string;
   created: number;
 }
-
-interface ListProps {
-  list: Project[];
+// 代表了Table组件的类型
+interface ListProps extends TableProps<Project> {
   users: User[];
 }
+// 如果给这个props设置类型那么就是
+// type PropsType = Omit<ListProps, 'name'>;
 
-export const List = ({ list, users }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
       pagination={false}
@@ -55,7 +56,7 @@ export const List = ({ list, users }: ListProps) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     />
   );
 };
