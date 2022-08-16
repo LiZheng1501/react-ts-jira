@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { SearchPanel } from './search-panel';
 import { List } from './list';
-import { cleanObject, useDebounce, useMount } from '../../utils';
+import { useDebounce, useMount } from '../../utils';
 import { useHttp } from '../../utils/http';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
+import { useProject } from '../../utils/project';
 
 export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
@@ -12,30 +13,9 @@ export const ProjectListScreen = () => {
     name: '',
     personId: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const debouncedParam = useDebounce(param, 200);
   const client = useHttp();
-  /**
-    上面的useState接受的参数类型就是
-      interface T {
-        name: string;
-        personId: string;
-      }
-  */
-  const [list, setList] = useState([]);
-  const debouncedParam = useDebounce(param, 2000);
-  // 当params变化要去请求接口
-  useEffect(() => {
-    setIsLoading(true);
-    client('projects', { data: cleanObject(debouncedParam) })
-      .then(setList)
-      .catch((err) => {
-        setError(err);
-        setList([]);
-      })
-      .finally(() => setIsLoading(false));
-  }, [debouncedParam]);
-
+  const { isLoading, error, data: list } = useProject(debouncedParam);
   // useDidMount只执行一次
   useMount(() => {
     client('users').then(setUsers);
@@ -48,7 +28,7 @@ export const ProjectListScreen = () => {
       {error ? (
         <Typography.Text type={'danger'}>{error.message}</Typography.Text>
       ) : null}
-      <List loading={isLoading} users={users} dataSource={list} />
+      <List loading={isLoading} users={users} dataSource={list || []} />
     </Container>
   );
 };

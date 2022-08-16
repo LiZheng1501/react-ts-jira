@@ -12,10 +12,7 @@ module.exports = (req, res, next) => {
       return res.status(400).json({ message: '用户名或密码错误' });
     }
   }
-  debugger;
-  if (req.method === 'GET' && req.path === '/login') {
-    debugger;
-  }
-  debugger;
+  // if (req.method === 'GET' && req.path === '/login') {
+  // }
   next();
 };

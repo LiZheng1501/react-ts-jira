@@ -3,6 +3,8 @@ import { User } from '../screens/project-list/search-panel';
 import * as auth from 'auth-provider';
 import { useMount } from '../utils';
 import { http } from '../utils/http';
+import { useAsync } from '../utils/use-async';
+import { FullPageError, FullPageLoading } from '../components/lib';
 
 interface AuthForm {
   username: string;
@@ -21,14 +23,24 @@ const AuthContext = React.createContext<
 AuthContext.displayName = 'AuthContext'; // 主要用在dev tool里面
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const {
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    isError,
+    run,
+    setData: setUser,
+  } = useAsync<User | null>();
   const login = (form: AuthForm) => auth.login(form).then(setUser); // user => setUser(user); 消参
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
   // 在整个组件加载的时候
   useMount(() => {
-    bootstrapUser().then(setUser);
+    run(bootstrapUser()).then(setUser);
   });
+  if (isIdle || isLoading) return <FullPageLoading />;
+  if (isError) return <FullPageError error={error} />;
   return (
     <AuthContext.Provider
       children={children}

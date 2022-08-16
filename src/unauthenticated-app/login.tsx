@@ -1,14 +1,23 @@
 import React from 'react';
 import { useAuth } from '../context/auth-context';
-import { Button, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { LongButton } from './index';
+import { useAsync } from '../utils/use-async';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ onError }: { onError: (err: Error) => void }) => {
   const { login } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
   // js/ts是鸭子类型：面向接口编程而不是面向对象编程
   // HtmlFormElement extends Element
-  const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+  const handleSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
+    try {
+      await run(login(values));
+    } catch (err) {
+      onError(err as Error);
+    }
   };
   return (
     <Form onFinish={handleSubmit}>
@@ -25,7 +34,7 @@ export const LoginScreen = () => {
         <Input placeholder={'密码'} type={'password'} id={'password'} />
       </Form.Item>
       <Form.Item>
-        <LongButton htmlType={'submit'} type={'primary'}>
+        <LongButton loading={isLoading} htmlType={'submit'} type={'primary'}>
           登录
         </LongButton>
       </Form.Item>
