@@ -55,3 +55,22 @@ export const useArray = <T>(initialValue: T[]) => {
     },
   };
 };
+
+//  document title
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  const oldTitle = document.title;
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+  useEffect(() => {
+    return () => {
+      // return 一个回调函数，在卸载的时候会调用
+      if (!keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+  });
+};

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SearchPanel } from './search-panel';
 import { List } from './list';
-import { useDebounce, useMount } from '../../utils';
+import { useDebounce, useDocumentTitle, useMount } from '../../utils';
 import { useHttp } from '../../utils/http';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
@@ -16,6 +16,7 @@ export const ProjectListScreen = () => {
   const debouncedParam = useDebounce(param, 200);
   const client = useHttp();
   const { isLoading, error, data: list } = useProject(debouncedParam);
+  useDocumentTitle('项目列表', false);
   // useDidMount只执行一次
   useMount(() => {
     client('users').then(setUsers);
