@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 // 对于一个custom hook来说，必须是它里面用到了别的hook, 如果函数也能完成，那么函数就挺好的了
 // 转换成boolean
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
@@ -61,7 +61,7 @@ export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
 ) => {
-  const oldTitle = document.title;
+  const oldTitle = useRef(document.title).current;
   useEffect(() => {
     document.title = title;
   }, [title]);
@@ -72,5 +72,6 @@ export const useDocumentTitle = (
         document.title = oldTitle;
       }
     };
-  });
+  }, [keepOnUnmount, oldTitle]);
+  // 这样保证了title是最新值，但是没法保存默认title了；如何解决，使用useRef; 返回的值在整个生命周期不变
 };

@@ -6,6 +6,7 @@ import { useHttp } from '../../utils/http';
 import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import { useProject } from '../../utils/project';
+import { Test } from '../../components/test-closure';
 
 export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
@@ -24,6 +25,7 @@ export const ProjectListScreen = () => {
 
   return (
     <Container>
+      <Test />
       <h2>项目列表</h2>
       <SearchPanel users={users} param={param} setParam={setParam} />
       {error ? (
