@@ -2,6 +2,11 @@ import React from 'react';
 import { User } from './search-panel';
 import { Table, TableProps } from 'antd';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
+// react-router和react-router-dom的关系，类似于react和react-dom/react-native,
+// react是核心库，主要处理计算的逻辑，类似于在组建中state状态，useEffect状态如何影响虚拟dom树，diff算法的运算
+// 得出的结果会被react使用，因为react-dom 只能在浏览器中运行，react-native只能在ios上
+// react-router主要管状态，不停的计算这棵路由树，是咋样的，然后给react-router-dom使用
 
 export interface Project {
   id: string;
@@ -21,12 +26,17 @@ interface ListProps extends TableProps<Project> {
 export const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
+      rowKey={'id'}
       pagination={false}
       columns={[
         {
           title: '名称',
-          dataIndex: 'name',
+          // dataIndex: 'name',
           sorter: (a, b) => a.name.localeCompare(b.name),
+          render(value, project) {
+            return <Link to={String(project.id)}>{project.name}</Link>;
+            // 会不会跳到 localhost:3000/5上，？不会，因为这个是在父组件的Route下包裹的
+          },
         },
         {
           title: '名称',

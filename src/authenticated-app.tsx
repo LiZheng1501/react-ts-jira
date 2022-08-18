@@ -1,4 +1,4 @@
-/* 登录后的页面 */
+/** 登录后的页面 */
 import React from 'react';
 import { ProjectListScreen } from './screens/project-list';
 import { useAuth } from './context/auth-context';
@@ -6,8 +6,11 @@ import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg';
 import styled from '@emotion/styled';
 import { Row } from './components/lib';
 import { Dropdown, Menu, Button } from 'antd';
+import { Routes, Navigate, Route } from 'react-router';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ProjectScreen } from 'screens/project';
 
-/*
+/**
 grid和flex各自的应用场景：
 1. 要考虑一维布局还是二维布局
 一般来说，一维布局（只有横向，纵向）用flex
@@ -45,7 +48,16 @@ export const AuthenticatedApp = () => {
         </HeaderRight>
       </Header>
       <Main>
-        <ProjectListScreen />
+        {/* router组件作用是包裹的组件间共享信息 */}
+        <Router>
+          <Routes>
+            <Route path={'/projects'} element={<ProjectListScreen />}></Route>
+            <Route
+              path={'/projects/:projectId/*'}
+              element={<ProjectScreen />}
+            ></Route>
+          </Routes>
+        </Router>
       </Main>
     </Container>
   );

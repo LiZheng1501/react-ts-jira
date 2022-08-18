@@ -27,11 +27,6 @@ export const Test = () => {
   const [num, setNum] = useState(0);
   const add = () => setNum(num + 1);
 
-  useMount(() => {
-    setInterval(() => {
-      console.log('num 在定时器中: ', num);
-    }, 1000);
-  });
   useEffect(() => {
     return () => {
       console.log(num);
