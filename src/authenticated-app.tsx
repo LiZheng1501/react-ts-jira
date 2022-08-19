@@ -6,9 +6,10 @@ import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg';
 import styled from '@emotion/styled';
 import { Row } from './components/lib';
 import { Dropdown, Menu, Button } from 'antd';
-import { Routes, Navigate, Route } from 'react-router';
+import { Routes, Route } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ProjectScreen } from 'screens/project';
+import { resetRoute } from 'utils';
 
 /**
 grid和flex各自的应用场景：
@@ -25,7 +26,9 @@ export const AuthenticatedApp = () => {
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
+          <Button type="link" onClick={resetRoute}>
+            <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
+          </Button>
           <h3>项目</h3>
           <h3>用户</h3>
         </HeaderLeft>

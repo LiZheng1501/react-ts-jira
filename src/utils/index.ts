@@ -75,3 +75,6 @@ export const useDocumentTitle = (
   }, [keepOnUnmount, oldTitle]);
   // 这样保证了title是最新值，但是没法保存默认title了；如何解决，使用useRef; 返回的值在整个生命周期不变
 };
+
+// 重置路由+刷新
+export const resetRoute = () => (window.location.href = window.location.origin);
