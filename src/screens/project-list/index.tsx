@@ -7,13 +7,15 @@ import styled from '@emotion/styled';
 import { Typography } from 'antd';
 import { useProject } from '../../utils/project';
 import { Test } from '../../components/test-closure';
+import { useUrlQueryParam } from 'utils/url';
 
 export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
-  const [param, setParam] = useState({
+  const [, setParam] = useState({
     name: '',
     personId: '',
   });
+  const [param] = useUrlQueryParam(['name', 'personId']);
   const debouncedParam = useDebounce(param, 200);
   const client = useHttp();
   const { isLoading, error, data: list } = useProject(debouncedParam);
@@ -22,7 +24,6 @@ export const ProjectListScreen = () => {
   useMount(() => {
     client('users').then(setUsers);
   });
-
   return (
     <Container>
       <Test />

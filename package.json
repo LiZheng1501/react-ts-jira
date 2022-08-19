@@ -53,6 +53,7 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@craco/craco": "^6.4.5",
     "@types/qs": "^6.9.7",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "antd": "^4.22.3",
     "eslint-config-prettier": "^8.5.0",
     "husky": "^8.0.1",
