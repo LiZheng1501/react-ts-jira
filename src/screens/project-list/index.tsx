@@ -15,7 +15,8 @@ export const ProjectListScreen = () => {
     name: '',
     personId: '',
   });
-  const [param] = useUrlQueryParam(['name', 'personId']);
+  const [keys] = useState<('name' | 'personId')[]>(['name', 'personId']);
+  const [param] = useUrlQueryParam(keys);
   const debouncedParam = useDebounce(param, 200);
   const client = useHttp();
   const { isLoading, error, data: list } = useProject(debouncedParam);
@@ -37,6 +38,11 @@ export const ProjectListScreen = () => {
   );
 };
 
+ProjectListScreen.whyDidYouRender = true;
+// 相当于在class中
+class ProjectListScreen2 extends React.Component<any, any> {
+  static whyDidYouRender = true;
+}
 const Container = styled.div`
   padding: 2rem;
 `;

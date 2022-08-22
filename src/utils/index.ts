@@ -37,7 +37,7 @@ export const useDebounce = <V>(value: V, delay?: number) => {
     }, delay);
     // 每次在上一次useEffect运行结束之后运行return函数（和debounce一样，第二次处理第一次的useEffect, 第三次处理第二次的, 直到最后一次）
     return () => clearTimeout(timeout);
-  }, [value, delay]);
+  }, [value, delay]); // 每当依赖变化，useEffect执行一次
   return debouncedValue;
 };
 
