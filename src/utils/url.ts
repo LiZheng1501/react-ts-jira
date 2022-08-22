@@ -13,7 +13,11 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
         }, {} as { [key in K]: string }),
       [searchParams, keys]
     ),
-    setSearchParams,
+    (params: Partial<{ [key in K]: unknown }>) => {
+      // iterator遍历器 凡是部署了iteratordou都可以用for...of进行遍历
+      const o = { ...Object.fromEntries(searchParams), ...params }; // 读取出url信息转成对象
+      return setSearchParams(o);
+    },
   ] as const;
 };
 
