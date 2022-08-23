@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SearchPanel } from './search-panel';
 import { List } from './list';
 import { useDebounce, useDocumentTitle, useMount } from '../../utils';
@@ -37,9 +37,9 @@ export const ProjectListScreen = () => {
 
 ProjectListScreen.whyDidYouRender = true;
 // 相当于在class中
-class ProjectListScreen2 extends React.Component<any, any> {
-  static whyDidYouRender = true;
-}
+// class ProjectListScreen2 extends React.Component<any, any> {
+//   static whyDidYouRender = true;
+// }
 const Container = styled.div`
   padding: 2rem;
 `;
