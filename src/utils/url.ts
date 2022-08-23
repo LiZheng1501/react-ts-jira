@@ -20,7 +20,3 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
     },
   ] as const;
 };
-
-// const a = ['12'] as const;
-
-// console.log(a);
