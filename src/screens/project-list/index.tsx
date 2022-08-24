@@ -13,7 +13,6 @@ export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
   const [keys] = useState<('name' | 'personId')[]>(['name', 'personId']);
   const [param, setParam] = useUrlQueryParam(keys);
-  // setParam({ name1: 'aaa' }); // 将setParam返回出来，但是也可以穿入在keys里面的值，希望可以更严谨一点，只能穿keys里面的
   const debouncedParam = useDebounce(param, 200);
   const client = useHttp();
   const { isLoading, error, data: list, retry } = useProject(debouncedParam);

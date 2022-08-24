@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Ref } from 'react';
 // 对于一个custom hook来说，必须是它里面用到了别的hook, 如果函数也能完成，那么函数就挺好的了
 // 转换成boolean
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
@@ -78,3 +78,16 @@ export const useDocumentTitle = (
 
 // 重置路由+刷新
 export const resetRoute = () => (window.location.href = window.location.origin);
+
+// 返回组件的挂载状态。只在已经挂载的时候返回true
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+  // 在页面被加载完之后被调用
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+  return mountedRef;
+};
