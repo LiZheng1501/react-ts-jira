@@ -21,15 +21,17 @@ export interface Project {
 // 代表了Table组件的类型
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 // 如果给这个props设置类型那么就是
 // type PropsType = Omit<ListProps, 'name'>;
 
-export const List = ({ users, ...props }: ListProps) => {
+export const List = ({ users, refresh, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   // const pinFn = (id: string, pin: boolean) => mutate({ id, pin });
   // 可以改成函数curry
-  const pinFn = (id: string) => (pin: boolean) => mutate({ id, pin });
+  const pinFn = (id: string) => (pin: boolean) =>
+    mutate({ id, pin }).then(refresh);
   return (
     <Table
       rowKey={'id'}
