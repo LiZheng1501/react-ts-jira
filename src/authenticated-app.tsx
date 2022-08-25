@@ -1,5 +1,5 @@
 /** 登录后的页面 */
-import React from 'react';
+import React, { useState } from 'react';
 import { ProjectListScreen } from './screens/project-list';
 import { useAuth } from './context/auth-context';
 import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg';
@@ -10,6 +10,8 @@ import { Routes, Route } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ProjectScreen } from 'screens/project';
 import { resetRoute } from 'utils';
+import { ProjectModal } from 'screens/project-list/project-modal';
+import { ProjectPopover } from 'components/project-popover';
 
 /**
 grid和flex各自的应用场景：
@@ -22,15 +24,16 @@ grid和flex各自的应用场景：
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
+  const [projectModalOpen, setProjectModelOpen] = useState(false);
   return (
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <Button type="link" onClick={resetRoute}>
+          <Button type="link" onClick={resetRoute} style={{ padding: 0 }}>
             <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
           </Button>
-          <h3>项目</h3>
-          <h3>用户</h3>
+          <ProjectPopover />
+          <span>用户</span>
         </HeaderLeft>
         <HeaderRight>
           <Dropdown
@@ -50,6 +53,7 @@ export const AuthenticatedApp = () => {
           </Dropdown>
         </HeaderRight>
       </Header>
+      <Button onClick={() => setProjectModelOpen(true)}>打开modal</Button>
       <Main>
         {/* router组件作用是包裹的组件间共享信息 */}
         <Router>
@@ -62,10 +66,15 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
+      <ProjectModal
+        projectModalOpen={projectModalOpen}
+        onClose={() => setProjectModelOpen(false)}
+      />
     </Container>
   );
 };
 
+// 暂时性死区
 const Container = styled.div``;
 const Header = styled(Row)`
   padding: 2rem;
