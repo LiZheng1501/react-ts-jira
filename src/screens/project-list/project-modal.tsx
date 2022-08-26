@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'antd/lib/radio';
 import { Drawer } from 'antd';
+import { ButtonNoPadding } from 'components/lib';
 
 export const ProjectModal = (props: {
   projectModalOpen: boolean;
@@ -13,7 +14,7 @@ export const ProjectModal = (props: {
       onClose={props.onClose}
     >
       <h1>Project modal</h1>
-      <Button onClick={props.onClose}>关闭</Button>
+      <ButtonNoPadding onClick={props.onClose}>关闭</ButtonNoPadding>
     </Drawer>
   );
 };

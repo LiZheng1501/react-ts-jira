@@ -32,7 +32,7 @@ export const AuthenticatedApp = () => {
           <Button type="link" onClick={resetRoute} style={{ padding: 0 }}>
             <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
           </Button>
-          <ProjectPopover />
+          <ProjectPopover setProjectModelOpen={setProjectModelOpen} />
           <span>用户</span>
         </HeaderLeft>
         <HeaderRight>
@@ -58,7 +58,12 @@ export const AuthenticatedApp = () => {
         {/* router组件作用是包裹的组件间共享信息 */}
         <Router>
           <Routes>
-            <Route path={'/projects'} element={<ProjectListScreen />}></Route>
+            <Route
+              path={'/projects'}
+              element={
+                <ProjectListScreen setProjectModalOpen={setProjectModelOpen} />
+              }
+            ></Route>
             <Route
               path={'/projects/:projectId/*'}
               element={<ProjectScreen />}

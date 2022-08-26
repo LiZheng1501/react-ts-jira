@@ -1,10 +1,11 @@
 import React from 'react';
 import { User } from './search-panel';
-import { Table, TableProps } from 'antd';
+import { Dropdown, Table, TableProps, Menu } from 'antd';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { Pin } from 'components/pin';
 import { useEditProject } from 'utils/project';
+import { ButtonNoPadding } from 'components/lib';
 // react-router和react-router-dom的关系，类似于react和react-dom/react-native,
 // react是核心库，主要处理计算的逻辑，类似于在组建中state状态，useEffect状态如何影响虚拟dom树，diff算法的运算
 // 得出的结果会被react使用，因为react-dom 只能在浏览器中运行，react-native只能在ios上
@@ -21,12 +22,18 @@ export interface Project {
 // 代表了Table组件的类型
 interface ListProps extends TableProps<Project> {
   users: User[];
+  setProjectModalOpen: (isOpen: boolean) => void;
   refresh?: () => void;
 }
 // 如果给这个props设置类型那么就是
 // type PropsType = Omit<ListProps, 'name'>;
 
-export const List = ({ users, refresh, ...props }: ListProps) => {
+export const List = ({
+  users,
+  refresh,
+  setProjectModalOpen,
+  ...props
+}: ListProps) => {
   const { mutate } = useEditProject();
   // const pinFn = (id: string, pin: boolean) => mutate({ id, pin });
   // 可以改成函数curry
@@ -83,6 +90,28 @@ export const List = ({ users, refresh, ...props }: ListProps) => {
                   ? dayjs(project.created).format('YYYY-MM-DD')
                   : '-'}
               </span>
+            );
+          },
+        },
+        {
+          render(value, project) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key={'edit'}>
+                      <ButtonNoPadding
+                        type="link"
+                        onClick={() => setProjectModalOpen(true)}
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
+              </Dropdown>
             );
           },
         },

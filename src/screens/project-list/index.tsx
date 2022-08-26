@@ -5,11 +5,16 @@ import { useDebounce, useDocumentTitle, useMount } from '../../utils';
 import { useHttp } from '../../utils/http';
 import styled from '@emotion/styled';
 import { Typography, Button } from 'antd';
+import { Row } from 'components/lib';
 import { useProject } from '../../utils/project';
 import { Test } from '../../components/test-closure';
 import { useUrlQueryParam } from 'utils/url';
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = ({
+  setProjectModalOpen,
+}: {
+  setProjectModalOpen: (isOpen: boolean) => void;
+}) => {
   const [users, setUsers] = useState([]);
   const [keys] = useState<('name' | 'personId')[]>(['name', 'personId']);
   const [param, setParam] = useUrlQueryParam(keys);
@@ -25,12 +30,18 @@ export const ProjectListScreen = () => {
     <Container>
       <Test />
       <Button onClick={retry}>Retry</Button>
-      <h2>项目列表</h2>
+      <Row between={true}>
+        <h2>项目列表</h2>
+        <Button type="link" onClick={() => setProjectModalOpen(true)}>
+          创建项目
+        </Button>
+      </Row>
       <SearchPanel users={users} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={'danger'}>{error.message}</Typography.Text>
       ) : null}
       <List
+        setProjectModalOpen={setProjectModalOpen}
         refresh={retry}
         loading={isLoading}
         users={users}
