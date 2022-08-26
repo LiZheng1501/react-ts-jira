@@ -22,7 +22,7 @@ export interface Project {
 // 代表了Table组件的类型
 interface ListProps extends TableProps<Project> {
   users: User[];
-  setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
   refresh?: () => void;
 }
 // 如果给这个props设置类型那么就是
@@ -31,7 +31,7 @@ interface ListProps extends TableProps<Project> {
 export const List = ({
   users,
   refresh,
-  setProjectModalOpen,
+  projectButton,
   ...props
 }: ListProps) => {
   const { mutate } = useEditProject();
@@ -99,14 +99,7 @@ export const List = ({
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={'edit'}>
-                      <ButtonNoPadding
-                        type="link"
-                        onClick={() => setProjectModalOpen(true)}
-                      >
-                        编辑
-                      </ButtonNoPadding>
-                    </Menu.Item>
+                    <Menu.Item key={'edit'}>{projectButton}</Menu.Item>
                   </Menu>
                 }
               >

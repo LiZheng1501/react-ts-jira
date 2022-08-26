@@ -11,9 +11,9 @@ import { Test } from '../../components/test-closure';
 import { useUrlQueryParam } from 'utils/url';
 
 export const ProjectListScreen = ({
-  setProjectModalOpen,
+  projectButton,
 }: {
-  setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }) => {
   const [users, setUsers] = useState([]);
   const [keys] = useState<('name' | 'personId')[]>(['name', 'personId']);
@@ -32,16 +32,14 @@ export const ProjectListScreen = ({
       <Button onClick={retry}>Retry</Button>
       <Row between={true}>
         <h2>项目列表</h2>
-        <Button type="link" onClick={() => setProjectModalOpen(true)}>
-          创建项目
-        </Button>
+        {projectButton}
       </Row>
       <SearchPanel users={users} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={'danger'}>{error.message}</Typography.Text>
       ) : null}
       <List
-        setProjectModalOpen={setProjectModalOpen}
+        projectButton={projectButton}
         refresh={retry}
         loading={isLoading}
         users={users}

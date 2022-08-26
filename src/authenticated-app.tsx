@@ -12,6 +12,7 @@ import { ProjectScreen } from 'screens/project';
 import { resetRoute } from 'utils';
 import { ProjectModal } from 'screens/project-list/project-modal';
 import { ProjectPopover } from 'components/project-popover';
+import { ButtonNoPadding } from './components/lib';
 
 /**
 grid和flex各自的应用场景：
@@ -61,7 +62,16 @@ export const AuthenticatedApp = () => {
             <Route
               path={'/projects'}
               element={
-                <ProjectListScreen setProjectModalOpen={setProjectModelOpen} />
+                <ProjectListScreen
+                  projectButton={
+                    <ButtonNoPadding
+                      type="link"
+                      onClick={() => setProjectModelOpen(true)}
+                    >
+                      创建项目
+                    </ButtonNoPadding>
+                  }
+                />
               }
             ></Route>
             <Route

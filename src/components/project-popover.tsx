@@ -20,12 +20,12 @@ export const ProjectPopover = (props: {
         ))}
       </List>
       <Divider />
-      <ButtonNoPadding
+      {/* <ButtonNoPadding
         type="link"
         onClick={() => props.setProjectModelOpen(true)}
       >
         创建项目
-      </ButtonNoPadding>
+      </ButtonNoPadding> */}
     </PopContainer>
   );
   return (
