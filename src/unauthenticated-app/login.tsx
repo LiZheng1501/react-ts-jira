@@ -3,16 +3,19 @@ import { useAuth } from '../context/auth-context';
 import { Form, Input } from 'antd';
 import { LongButton } from './index';
 import { useAsync } from '../utils/use-async';
+import { useDispatch } from 'react-redux';
 
 export const LoginScreen = ({ onError }: { onError: (err: Error) => void }) => {
   const { login } = useAuth();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  const dispatch = useDispatch();
   // js/ts是鸭子类型：面向接口编程而不是面向对象编程
   // HtmlFormElement extends Element
   const handleSubmit = async (values: {
     username: string;
     password: string;
   }) => {
+    // dispatch(loginThunk(values));
     try {
       await run(login(values));
     } catch (err) {
