@@ -12,7 +12,8 @@ import { ProjectScreen } from 'screens/project';
 import { resetRoute } from 'utils';
 import { ProjectModal } from 'screens/project-list/project-modal';
 import { ProjectPopover } from 'components/project-popover';
-import { ButtonNoPadding } from './components/lib';
+import { useDispatch } from 'react-redux';
+import { projectListActions } from 'screens/project-list/project-list.slice';
 
 /**
 grid和flex各自的应用场景：
@@ -25,7 +26,7 @@ grid和flex各自的应用场景：
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
-  const [projectModalOpen, setProjectModelOpen] = useState(false);
+  const dispatch = useDispatch();
   return (
     <Container>
       <Header between={true}>
@@ -33,7 +34,7 @@ export const AuthenticatedApp = () => {
           <Button type="link" onClick={resetRoute} style={{ padding: 0 }}>
             <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
           </Button>
-          <ProjectPopover setProjectModelOpen={setProjectModelOpen} />
+          <ProjectPopover />
           <span>用户</span>
         </HeaderLeft>
         <HeaderRight>
@@ -54,26 +55,14 @@ export const AuthenticatedApp = () => {
           </Dropdown>
         </HeaderRight>
       </Header>
-      <Button onClick={() => setProjectModelOpen(true)}>打开modal</Button>
+      <Button onClick={() => dispatch(projectListActions.openProjectModal())}>
+        打开modal
+      </Button>
       <Main>
         {/* router组件作用是包裹的组件间共享信息 */}
         <Router>
           <Routes>
-            <Route
-              path={'/projects'}
-              element={
-                <ProjectListScreen
-                  projectButton={
-                    <ButtonNoPadding
-                      type="link"
-                      onClick={() => setProjectModelOpen(true)}
-                    >
-                      创建项目
-                    </ButtonNoPadding>
-                  }
-                />
-              }
-            ></Route>
+            <Route path={'/projects'} element={<ProjectListScreen />}></Route>
             <Route
               path={'/projects/:projectId/*'}
               element={<ProjectScreen />}
@@ -81,10 +70,7 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModelOpen(false)}
-      />
+      <ProjectModal />
     </Container>
   );
 };

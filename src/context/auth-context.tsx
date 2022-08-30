@@ -5,6 +5,8 @@ import { useMount } from '../utils';
 import { http } from '../utils/http';
 import { useAsync } from '../utils/use-async';
 import { FullPageError, FullPageLoading } from '../components/lib';
+import { Provider } from 'react-redux';
+import { store } from 'store';
 
 interface AuthForm {
   username: string;
@@ -42,10 +44,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   if (isIdle || isLoading) return <FullPageLoading />;
   if (isError) return <FullPageError error={error} />;
   return (
-    <AuthContext.Provider
-      children={children}
-      value={{ user, login, register, logout }}
-    />
+    <Provider store={store}>
+      <AuthContext.Provider
+        children={children}
+        value={{ user, login, register, logout }}
+      />
+    </Provider>
   );
 };
 

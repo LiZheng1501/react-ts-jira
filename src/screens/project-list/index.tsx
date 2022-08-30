@@ -5,16 +5,15 @@ import { useDebounce, useDocumentTitle, useMount } from '../../utils';
 import { useHttp } from '../../utils/http';
 import styled from '@emotion/styled';
 import { Typography, Button } from 'antd';
-import { Row } from 'components/lib';
+import { ButtonNoPadding, Row } from 'components/lib';
 import { useProject } from '../../utils/project';
 import { Test } from '../../components/test-closure';
 import { useUrlQueryParam } from 'utils/url';
+import { useDispatch } from 'react-redux';
+import { projectListActions } from './project-list.slice';
 
-export const ProjectListScreen = ({
-  projectButton,
-}: {
-  projectButton: JSX.Element;
-}) => {
+export const ProjectListScreen = () => {
+  const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [keys] = useState<('name' | 'personId')[]>(['name', 'personId']);
   const [param, setParam] = useUrlQueryParam(keys);
@@ -32,14 +31,17 @@ export const ProjectListScreen = ({
       <Button onClick={retry}>Retry</Button>
       <Row between={true}>
         <h2>项目列表</h2>
-        {projectButton}
+        <ButtonNoPadding
+          onClick={() => dispatch(projectListActions.openProjectModal)}
+        >
+          创建项目
+        </ButtonNoPadding>
       </Row>
       <SearchPanel users={users} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={'danger'}>{error.message}</Typography.Text>
       ) : null}
       <List
-        projectButton={projectButton}
         refresh={retry}
         loading={isLoading}
         users={users}

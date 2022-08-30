@@ -2,19 +2,27 @@ import React from 'react';
 import { Button } from 'antd/lib/radio';
 import { Drawer } from 'antd';
 import { ButtonNoPadding } from 'components/lib';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  projectListActions,
+  selectProjectModalOpen,
+} from './project-list.slice';
 
-export const ProjectModal = (props: {
-  projectModalOpen: boolean;
-  onClose: () => void;
-}) => {
+export const ProjectModal = () => {
+  const dispatch = useDispatch();
+  const projectModalOpen = useSelector(selectProjectModalOpen);
   return (
     <Drawer
-      visible={props.projectModalOpen}
+      visible={projectModalOpen}
       width={'100%'}
-      onClose={props.onClose}
+      onClose={() => dispatch(projectListActions.closeProjectModal())}
     >
       <h1>Project modal</h1>
-      <ButtonNoPadding onClick={props.onClose}>关闭</ButtonNoPadding>
+      <ButtonNoPadding
+        onClick={() => dispatch(projectListActions.closeProjectModal())}
+      >
+        关闭
+      </ButtonNoPadding>
     </Drawer>
   );
 };

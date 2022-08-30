@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { Pin } from 'components/pin';
 import { useEditProject } from 'utils/project';
 import { ButtonNoPadding } from 'components/lib';
+import { useDispatch } from 'react-redux';
+import { projectListActions } from './project-list.slice';
 // react-router和react-router-dom的关系，类似于react和react-dom/react-native,
 // react是核心库，主要处理计算的逻辑，类似于在组建中state状态，useEffect状态如何影响虚拟dom树，diff算法的运算
 // 得出的结果会被react使用，因为react-dom 只能在浏览器中运行，react-native只能在ios上
@@ -22,18 +24,13 @@ export interface Project {
 // 代表了Table组件的类型
 interface ListProps extends TableProps<Project> {
   users: User[];
-  projectButton: JSX.Element;
   refresh?: () => void;
 }
 // 如果给这个props设置类型那么就是
 // type PropsType = Omit<ListProps, 'name'>;
 
-export const List = ({
-  users,
-  refresh,
-  projectButton,
-  ...props
-}: ListProps) => {
+export const List = ({ users, refresh, ...props }: ListProps) => {
+  const dispatch = useDispatch();
   const { mutate } = useEditProject();
   // const pinFn = (id: string, pin: boolean) => mutate({ id, pin });
   // 可以改成函数curry
@@ -99,7 +96,16 @@ export const List = ({
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={'edit'}>{projectButton}</Menu.Item>
+                    <Menu.Item key={'edit'}>
+                      <ButtonNoPadding
+                        onClick={() =>
+                          dispatch(projectListActions.openProjectModal())
+                        }
+                        type="link"
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    </Menu.Item>
                   </Menu>
                 }
               >
