@@ -22,18 +22,12 @@ export interface Project {
 // 代表了Table组件的类型
 interface ListProps extends TableProps<Project> {
   users: User[];
-  projectButton: JSX.Element;
   refresh?: () => void;
 }
 // 如果给这个props设置类型那么就是
 // type PropsType = Omit<ListProps, 'name'>;
 
-export const List = ({
-  users,
-  refresh,
-  projectButton,
-  ...props
-}: ListProps) => {
+export const List = ({ users, refresh, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   // const pinFn = (id: string, pin: boolean) => mutate({ id, pin });
   // 可以改成函数curry
@@ -99,7 +93,7 @@ export const List = ({
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={'edit'}>{projectButton}</Menu.Item>
+                    <Menu.Item key={'edit'}>{}</Menu.Item>
                   </Menu>
                 }
               >

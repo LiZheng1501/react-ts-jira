@@ -20,3 +20,17 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
     },
   ] as const;
 };
+
+// 全局的状态管理器
+export const useProjectModal = () => {
+  const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
+    'projectCreate',
+  ]);
+  const open = () => setProjectCreate({ projectCreate: true });
+  const close = () => setProjectCreate({ projectCreate: undefined }); // 关闭的时候就不用createProject=false了
+  return {
+    projectModalOpen: projectCreate === 'true',
+    open,
+    close,
+  };
+};

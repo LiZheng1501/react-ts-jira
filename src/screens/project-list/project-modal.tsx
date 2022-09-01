@@ -1,20 +1,14 @@
 import React from 'react';
-import { Button } from 'antd/lib/radio';
 import { Drawer } from 'antd';
 import { ButtonNoPadding } from 'components/lib';
+import { useProjectModal } from 'utils/url';
 
-export const ProjectModal = (props: {
-  projectModalOpen: boolean;
-  onClose: () => void;
-}) => {
+export const ProjectModal = () => {
+  const { projectModalOpen, open, close } = useProjectModal();
   return (
-    <Drawer
-      visible={props.projectModalOpen}
-      width={'100%'}
-      onClose={props.onClose}
-    >
+    <Drawer visible={projectModalOpen} width={'100%'} onClose={close}>
       <h1>Project modal</h1>
-      <ButtonNoPadding onClick={props.onClose}>关闭</ButtonNoPadding>
+      <ButtonNoPadding onClick={close}>关闭</ButtonNoPadding>
     </Drawer>
   );
 };
