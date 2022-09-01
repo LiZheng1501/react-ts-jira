@@ -17,7 +17,7 @@ export const ProjectListScreen = () => {
   const [param, setParam] = useUrlQueryParam(keys);
   const debouncedParam = useDebounce(param, 200);
   const client = useHttp();
-  const { isLoading, error, data: list, retry } = useProject(debouncedParam);
+  const { isLoading, error, data: list } = useProject(debouncedParam);
   const { open } = useProjectModal();
   useDocumentTitle('项目列表', false);
   // useDidMount只执行一次
@@ -27,7 +27,6 @@ export const ProjectListScreen = () => {
   return (
     <Container>
       <Test />
-      <Button onClick={retry}>Retry</Button>
       <Row between={true}>
         <h2>项目列表</h2>
         <ButtonNoPadding type="link" onClick={open}>
@@ -39,7 +38,7 @@ export const ProjectListScreen = () => {
         <Typography.Text type={'danger'}>{error.message}</Typography.Text>
       ) : null}
       <List
-        refresh={retry}
+        // refresh={retry}
         loading={isLoading}
         users={users}
         dataSource={list || []}

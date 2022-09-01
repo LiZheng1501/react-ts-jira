@@ -6,9 +6,9 @@ import { ButtonNoPadding } from './lib';
 import { useProjectModal } from 'utils/url';
 
 export const ProjectPopover = () => {
-  const { data: projects, isLoading } = useProject();
+  const { data: projects } = useProject();
   const pinnedProjects = projects?.filter((project) => project.pin);
-  const { open, projectModalOpen } = useProjectModal();
+  const { open } = useProjectModal();
   const content = (
     <PopContainer>
       <Typography.Text type="secondary">收藏项目</Typography.Text>

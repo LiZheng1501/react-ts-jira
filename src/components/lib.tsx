@@ -39,10 +39,20 @@ export const FullPageLoading = () => (
 
 export const FullPageError = ({ error }: { error: Error | null }) => (
   <FullPage>
-    <Typography.Text type={'danger'}>{error?.message}</Typography.Text>
+    <ErrorBox error={error} />
   </FullPage>
 );
 
 export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;
+
+const isError = (value: any): value is Error => value?.message;
+
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  // 只要接口符合某个特征就认为它是这个类型
+  if (isError(error)) {
+    return <Typography.Text type={'danger'}>{error?.message}</Typography.Text>;
+  }
+  return null;
+};
