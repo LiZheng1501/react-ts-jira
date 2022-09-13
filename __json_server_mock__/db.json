@@ -53,5 +53,63 @@
       "organization": "黑夜",
       "created": 1546900800000
     }
+  ],
+  "kanbans": [
+    {
+      "id": 123,
+      "name": "克莱恩" ,
+      "projectId": "123343"
+    },
+    {
+      "id": 1233,
+      "name": "正义" ,
+      "projectId": "123143"
+    },
+    {
+      "id": 1234,
+      "name": "守夜人",
+      "projectId": "xcinxing"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 123,
+      "kanbanId": 123,
+      "name": "格尔曼狩猎海盗",
+      "processorId": 11223,
+      "projectId": 22,
+      "epicId": 123,
+      "typeId": 10,
+      "note": "卖非凡特性"
+    },
+    {
+      "id": 1233,
+      "kanbanId": 1233,
+      "name": "狩猎秘法师",
+      "processorId": 112323,
+      "projectId": 222,
+      "epicId": 1232,
+      "typeId": 11,
+      "note": "卖半神非凡特性"
+    },
+    {
+      "id":1234,
+      "kanbanId": 1234,
+      "name": "去死吧因斯赞格威尔!",
+      "processorId": 2232,
+      "projectId": 12,
+      "typeId": 11,
+      "note": "给队长报仇"
+    }
+  ],
+  "tasktypes": [
+    {
+      "id": 10,
+      "name": "未完成"
+    },
+    {
+      "id": 11,
+      "name": "已完成"
+    }
   ]
 }

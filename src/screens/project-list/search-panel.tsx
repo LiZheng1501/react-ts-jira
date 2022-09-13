@@ -1,13 +1,6 @@
 import React from 'react';
-import { Form, Select, Input, Card } from 'antd';
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  title: string;
-  organization: string;
-  token: string;
-}
+import { Card, Form, Input, Select } from 'antd';
+import { User } from '../../types/user';
 
 // 表示这个组件如何使用
 interface SearchPanelProps {

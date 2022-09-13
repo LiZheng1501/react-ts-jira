@@ -4,7 +4,7 @@ import { List } from './list';
 import { useDebounce, useDocumentTitle, useMount } from '../../utils';
 import { useHttp } from '../../utils/http';
 import styled from '@emotion/styled';
-import { Typography, Button } from 'antd';
+import { Typography, Button, Input } from 'antd';
 import { Row } from 'components/lib';
 import { useProject } from '../../utils/project';
 import { Test } from '../../components/test-closure';
@@ -19,6 +19,7 @@ export const ProjectListScreen = () => {
   const client = useHttp();
   const { isLoading, error, data: list } = useProject(debouncedParam);
   const { open } = useProjectModal();
+  const [iptValue, setIptValue] = useState('');
   useDocumentTitle('项目列表', false);
   // useDidMount只执行一次
   useMount(() => {
@@ -26,6 +27,10 @@ export const ProjectListScreen = () => {
   });
   return (
     <Container>
+      <Input
+        value={iptValue}
+        onChange={(event) => setIptValue(event.target.value)}
+      />
       <Test />
       <Row between={true}>
         <h2>项目列表</h2>
