@@ -6,3 +6,10 @@ export const AppProviders = ({ children }: { children: ReactNode }) => {
   // children 就是 app 根组件
   return <AuthProvider>{children}</AuthProvider>;
 };
+
+type Person = {
+  name: string;
+  age: number;
+};
+
+const liz: Partial<Person> = { name: 'liz' };
