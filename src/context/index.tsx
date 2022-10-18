@@ -7,9 +7,9 @@ export const AppProviders = ({ children }: { children: ReactNode }) => {
   return <AuthProvider>{children}</AuthProvider>;
 };
 
-type Person = {
-  name: string;
-  age: number;
-};
+// type Person = {
+//   name: string;
+//   age: number;
+// };
 
-const liz: Partial<Person> = { name: 'liz' };
+// const liz: Partial<Person> = { name: 'liz' };
